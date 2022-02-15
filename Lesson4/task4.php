@@ -1,13 +1,12 @@
 <?php
-  function divider ($num) {
-    for ($i = $num; $i > 0; $i--) {
+  function divider ($num, $i) {
+    if ($i < $num) {
       if ($num % $i == 0) {
-        $arr[] = $i;
+        echo $i;
       }
+    divider($num,  $i = $i + 1);
     }
-    var_dump($arr);
-    return $arr;
   }
 
-  divider(21);
+  divider(21, 1);
 ?>
