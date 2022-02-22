@@ -1,16 +1,16 @@
 <?php
   function printArray($arr) {
-    foreach ($arr as $var) {
+    foreach ($arr as &$var) {
           if(is_array($var)) {
-            foreach ($var as $v) {
-              echo "$v \n";
-            }
+            printArray($var);
+            // unset($var);
           } else {
-          echo $var . PHP_EOL;
+              echo $var . PHP_EOL;
+              // unset($var);
             }
     }
   }
   
-  printArray(['fhgjkhfjkvghk' => ["a", "B"], 2, 3]);
+  printArray([1, ["a", "B"], 2, 3, [["c", "d"], "d"]]);
 
 ?>
