@@ -1,10 +1,10 @@
 <?php
   function divider ($num, $i) {
-    if ($i < $num) {
+    if ($i < $num / 2) {
       if ($num % $i == 0) {
-        echo $i;
+        echo $i . PHP_EOL;
       }
-    divider($num,  $i = $i + 1);
+    divider($num,  $i += 1);
     }
   }
 

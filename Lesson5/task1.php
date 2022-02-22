@@ -9,9 +9,9 @@
       }
     $res [] = $var;
     }
-    // var_dump($res);
+    echo (implode($res));
     return implode($res);
   }
 
-  searchChar('HELLO', 'e');
+  searchChar('HellO', 'e');
 ?>
