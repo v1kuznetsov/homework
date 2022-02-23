@@ -3,10 +3,8 @@
     foreach ($arr as &$var) {
           if(is_array($var)) {
             printArray($var);
-            // unset($var);
           } else {
               echo $var . PHP_EOL;
-              // unset($var);
             }
     }
   }

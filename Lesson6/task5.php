@@ -10,7 +10,6 @@
         }
       }
     }
-    return false;
   }
 
   findInArray([ 1, [ 5, "B"], 2, 3 ], 5);
