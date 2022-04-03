@@ -4,7 +4,7 @@
     $upperChar = strtoupper($char);
     $str = str_split($str);
     foreach ($str as $var) {
-      if ($var === $char || $var === $lowerChar || $var === $upperChar) {
+      if ($var === $lowerChar || $var === $upperChar) {
         $var = strtoupper($var);
       }
     $res [] = $var;
