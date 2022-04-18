@@ -52,9 +52,9 @@ CREATE TABLE `directors` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(15) DEFAULT NULL,
   `surname` varchar(15) NOT NULL,
-  `fame` int NOT NULL,
+  `in_famous` varchar(5) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `directors` (
 
 LOCK TABLES `directors` WRITE;
 /*!40000 ALTER TABLE `directors` DISABLE KEYS */;
-INSERT INTO `directors` VALUES (1,'Joe','Johnston',1),(2,'Mett','Bettinelli',0),(3,'Kimal','K.M.',0),(4,'Roel','Rein',1);
+INSERT INTO `directors` VALUES (1,'Joe','Johnston','TRUE'),(2,'Mett','Bettinelli','FALSE'),(3,'Kimal','K.M.','FALSE'),(4,'Roel','Rein','TRUE');
 /*!40000 ALTER TABLE `directors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,7 +79,7 @@ CREATE TABLE `movie_title` (
   `name` varchar(15) NOT NULL,
   `director_name` varchar(15) NOT NULL,
   `director_surname` varchar(15) NOT NULL,
-  `fame` int NOT NULL,
+  `in_famous` varchar(5) NOT NULL,
   `reliase_date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -91,7 +91,7 @@ CREATE TABLE `movie_title` (
 
 LOCK TABLES `movie_title` WRITE;
 /*!40000 ALTER TABLE `movie_title` DISABLE KEYS */;
-INSERT INTO `movie_title` VALUES (1,'Jumanji','Joe','Johnston',1,'2022-01-01'),(2,'Scream','Mett','Bettinelli',0,'2022-01-01'),(3,'Pada','Kimal','K.M.',0,'2022-01-01'),(4,'Fistful','Roel','Rein',1,'2022-01-01');
+INSERT INTO `movie_title` VALUES (1,'Jumanji','Joe','Johnston','TRUE','2022-01-01'),(2,'Scream','Mett','Bettinelli','FALSE','2022-01-01'),(3,'Pada','Kimal','K.M.','FALSE','2022-01-01'),(4,'Fistful','Roel','Rein','TRUE','2022-01-01');
 /*!40000 ALTER TABLE `movie_title` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -104,4 +104,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-15 12:23:29
+-- Dump completed on 2022-04-18 11:56:35
