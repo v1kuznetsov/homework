@@ -29,7 +29,8 @@
       $res1 = 0;
       closedir($fp);
     }
-  } 
+  }
 
-  fullFolder("/home/vlad/HomeWorks/Lesson7/07/");
+  $dir = $argv[1];
+  fullFolder("$dir");
 ?>
