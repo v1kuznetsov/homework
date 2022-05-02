@@ -1,0 +1,19 @@
+{
+    "name": "practice/php",
+    "description": "PHP Lessons",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "HomeWorks/OOP_15"
+        }
+    },
+    "authors": [
+        {
+            "name": "v1kuznetsov",
+            "email": "vladislav1kuznetsov@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
