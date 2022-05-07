@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="ru">
-
-<head>
-  <meta charset="UTF-8">
-  <link href="style/style.css" rel="stylesheet">
-  <title>Города</title>
-  <?php
+<?php
     $mytown = ($_POST["town"]);
 
     class FunctionsForGame {
@@ -89,9 +82,9 @@
                 {
                   if (!$check == 1)
                   {
-                      $sql = "INSERT INTO existtowns (name) VALUES ('$town')";
-                      mysqli_query(self::MySQL(), $sql);
-                      return $this->town = $town;
+                    $sql = "INSERT INTO existtowns (name) VALUES ('$town')";
+                    mysqli_query(self::MySQL(), $sql);
+                    return $this->town = $town;
                   }
                 }
               }
@@ -119,28 +112,3 @@
     $lastCharForMe = $start->getlastCharForMe();
     
   ?>
-</head>
-
-<body>
-  <div class="main">
-    <p>Города игра</p>
-    <form action="/form.php" method="POST">
-      <p>
-        Ответ:<?php echo $respond;?>
-      </p>
-      <p>
-        Название города:</br>
-        <input type="text" name="town" placeholder="Город на букву: <?php echo $lastCharForMe;?>"/>
-      </p>
-      <p>
-        <button class="sub" type="submit">Отправить</button>
-      </p>
-      <p>ИЛИ</p>
-      <p>
-        <button class="res" type="trese">Очистить историю городов</button>
-      </p>
-    </form>
-  </div>
-</body>
-
-</html>

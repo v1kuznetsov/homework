@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link href="style.css" rel="stylesheet">
+  <link href="style/style.css" rel="stylesheet">
   <title>Города</title>
 </head>
 
@@ -18,7 +18,9 @@
       <p>
         <button class="sub" type="submit">Отправить</button>
       </p>
-      <p>ИЛИ</p>
+      <p>
+        ИЛИ
+      </p>
       <p>
         <button class="res" type="reset">Очистить форму</button>
       </p>
