@@ -8,7 +8,7 @@
   <?php
       $mytown = ($_POST["town"]);
       
-      require_once '/home/vlad/HomeWorks/vendor/autoload.php';
+      require_once '../../vendor/autoload.php';
       use App\OOP_15\task_2\repository\FunctionsForGame;
 
       $start = new FunctionsForGame ("$mytown");
