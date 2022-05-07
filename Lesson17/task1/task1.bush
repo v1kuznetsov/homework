@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ls | grep test.*
+mv $1.php test.$2
+ls | grep test.*
