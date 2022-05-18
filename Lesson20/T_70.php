@@ -5,10 +5,17 @@ class T_70
   private int $conditionT_70;
   private $int;
 
-  public function __construct ()
+  public function __construct (int $int)
   {
-    $this->int = rand(0, 1);
-    $this->conditionT_70 = rand(1, 4);
+    if (($int === 1 || $int === 0))
+    {
+      $this->int = $int;
+      echo $this->conditionT_70 = rand(1, 4);
+    }
+    else
+    {
+      return false;
+    }
   }
 
   public function changeCondition ()
@@ -18,7 +25,7 @@ class T_70
       echo 'perfect' . PHP_EOL;
       if (!($this->conditionT_70 > 4))
       {
-        $this->conditionT_70 += 1;
+        echo $this->conditionT_70 += 1;
       }
     }
     else
@@ -26,14 +33,14 @@ class T_70
       echo 'bad' . PHP_EOL;
       if (!($this->conditionT_70 < 1))
       {
-        $this->conditionT_70 -= 1;
+        echo $this->conditionT_70 -= 1;
       }
     }
   }
 }
-
-$t_10 = new T_70();
-
-$t_10->changeCondition();
-
+for($i = 0; $i < 20; $i++)
+{
+  $t_10 = new T_70($a = readline("junior errors ="));
+  $t_10->changeCondition();
+}
 ?>
