@@ -1,6 +1,5 @@
 <?php
 require_once '../vendor/autoload.php';
-// require_once '/home/vlad/HomeWorks/vendor/autoload.php';
 
 use App\Js\Model\Price;
 use App\Js\Model\Product;
@@ -27,7 +26,4 @@ catch (Exception $last)
   echo "Exception: " . $last->getMessage();
 }
 
-header('Content-Type: application/json');
-
-die(json_encode($repository->findAllProducts()));
 ?>

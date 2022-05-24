@@ -10,11 +10,11 @@ class T_70
     if (($int === 1 || $int === 0))
     {
       $this->int = $int;
-      echo $this->conditionT_70 = rand(1, 4);
+      $this->conditionT_70 = rand(1, 4);
     }
     else
     {
-      return false;
+      throw new Exception('Wrong number');
     }
   }
 
@@ -25,7 +25,7 @@ class T_70
       echo 'perfect' . PHP_EOL;
       if (!($this->conditionT_70 > 4))
       {
-        echo $this->conditionT_70 += 1;
+        $this->conditionT_70 += 1;
       }
     }
     else
@@ -33,14 +33,20 @@ class T_70
       echo 'bad' . PHP_EOL;
       if (!($this->conditionT_70 < 1))
       {
-        echo $this->conditionT_70 -= 1;
+        $this->conditionT_70 -= 1;
       }
     }
   }
 }
-for($i = 0; $i < 20; $i++)
+
+try
 {
-  $t_10 = new T_70($a = readline("junior errors ="));
-  $t_10->changeCondition();
+    $t_10 = new T_70($a = readline("(1 or 0)-> "));
+    $t_10->changeCondition();
 }
+catch(Exception $e)
+{
+    echo "Exception: " . $e->getMessage() . PHP_EOL;
+}
+  
 ?>
