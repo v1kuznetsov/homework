@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "82ca75f0b1f130f018febdda29af13086da5dbac"
+                "reference": "b720a2d0ff4a135ee0ef542082b2b979ff1f1d14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/82ca75f0b1f130f018febdda29af13086da5dbac",
-                "reference": "82ca75f0b1f130f018febdda29af13086da5dbac",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b720a2d0ff4a135ee0ef542082b2b979ff1f1d14",
+                "reference": "b720a2d0ff4a135ee0ef542082b2b979ff1f1d14",
                 "shasum": ""
             },
             "require": {
@@ -129,7 +129,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-20T14:21:21+00:00"
+            "time": "2022-05-16T15:07:31+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1243,12 +1243,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "e748323ac61c67d5f6e6f1b7fefb7477fcc882c3"
+                "reference": "77354693683de022702c9b95e7fe8d840476f82c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e748323ac61c67d5f6e6f1b7fefb7477fcc882c3",
-                "reference": "e748323ac61c67d5f6e6f1b7fefb7477fcc882c3",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/77354693683de022702c9b95e7fe8d840476f82c",
+                "reference": "77354693683de022702c9b95e7fe8d840476f82c",
                 "shasum": ""
             },
             "require": {
@@ -1278,9 +1278,6 @@
                 "sebastian/object-enumerator": "^5.0",
                 "sebastian/type": "^4.0",
                 "sebastian/version": "^4.0"
-            },
-            "require-dev": {
-                "ext-pdo": "*"
             },
             "suggest": {
                 "ext-soap": "*"
@@ -1335,7 +1332,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-05-11T07:14:43+00:00"
+            "time": "2022-05-23T07:12:48+00:00"
         },
         {
             "name": "sebastian/cli-parser",
