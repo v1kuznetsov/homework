@@ -14,9 +14,9 @@ class Price
     $this->coins = $coins;
   }
 
-  public function createFromString(string $price)
+  public static function createFromString(string $price)
   {
-    return ($price * 100);
+    return new self($price * 100);
   }
 
   public function __toString(): string
