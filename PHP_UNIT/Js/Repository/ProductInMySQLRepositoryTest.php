@@ -9,30 +9,24 @@ use App\Js\Repository\ProductInMySQLRepository;
 
 class ProductInMySQLRepositoryTest extends TestCase
 {
-  public function testFindEmptyProducts()
-  {
-    $repository = new ProductInMySQLRepository();
-    $this->assertCount(0, $repository->FindAllProducts());
-  }
-
-  public function testAddOneProduct()
+  public function setUp(): void
   {
     $price = new Price(20);
     $product = $this->createMock(Product::class);
-    $product->method('getId')
-      ->willReturn(1);
-    $product->method('getName')
-      ->willReturn('apple');
-    $product->method('getPrice')
-      ->willReturn($price);
-    $product->method('getSeason')
-      ->willReturn(2);
-    $repository = new ProductInMySQLRepository();
-    // $this->expectException(ProductAlreadyExsistException::class);
-    $repository->addProduct($product);
+    $this->product = new Product(1, 'apple', $price, 2);
+  }
 
-    $repository = new ProductInMySQLRepository();
-    $this->assertCount(1, $repository->FindAllProducts());
+  // public function testAddOneProduct()
+  // {
+  //   $repository = $this->createMock(ProductInMySQLRepository::class);
+
+  //   $repository->addProduct($this->product);
+  // }
+
+  public function testEmptyRopository()
+  {
+    $repository = $this->createMock(ProductInMySQLRepository::class);
+    $this->assertCount(0, $repository->findAllProducts());
   }
 }
 ?>

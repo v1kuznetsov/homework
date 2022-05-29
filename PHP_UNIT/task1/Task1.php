@@ -61,7 +61,4 @@ class Task1
     return $res;
   }
 }
-
-$test = new Task1(2, [1,2,3]);
-var_dump($test->fouthTask());
 ?>
