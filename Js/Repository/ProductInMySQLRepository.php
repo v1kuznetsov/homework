@@ -37,7 +37,7 @@ class ProductInMySQLRepository implements ProductRepositoryInterface
     }
   }
 
-  public function findAllProducts(): array|string
+  public function findAllProducts(): array
   {
     $result = [];
     $sql = "SELECT * FROM products";
@@ -45,9 +45,6 @@ class ProductInMySQLRepository implements ProductRepositoryInterface
     foreach ($res as $val)
     {
       $result[$val['id']] = $val;
-    }
-    if ($result == NULL) {
-      return false;
     }
     return $result;
   }

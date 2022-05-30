@@ -16,12 +16,18 @@ class ProductInMySQLRepositoryTest extends TestCase
     $this->product = new Product(1, 'apple', $price, 2);
   }
 
-  // public function testAddOneProduct()
-  // {
-  //   $repository = $this->createMock(ProductInMySQLRepository::class);
+  public function testAddUpDelProduct()
+  {
+    $repository = $this->createMock(ProductInMySQLRepository::class);
 
-  //   $repository->addProduct($this->product);
-  // }
+    $repository->addProduct($this->product);
+
+    $repository->updateProduct($this->product);
+
+    $repository->deleteProduct($this->product);
+
+    $this->assertCount(0, $repository->findAllProducts());
+  }
 
   public function testEmptyRopository()
   {
