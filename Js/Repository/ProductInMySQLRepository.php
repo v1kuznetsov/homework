@@ -8,7 +8,7 @@ class ProductInMySQLRepository implements ProductRepositoryInterface
 {
   public static function MySQL ()
   {
-    return mysqli_connect ('localhost', 'admin', 'password', 'store');
+    return mysqli_connect ('mysql', 'root', 'root', 'store');
   }
 
   public function addProduct(Product $product): void
