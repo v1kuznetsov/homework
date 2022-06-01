@@ -1,0 +1,8 @@
+172.18.0.1 - - [01/Jun/2022:11:52:08 +0000] "GET /index.html HTTP/1.1" 404 27 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"
+172.18.0.1 - - [01/Jun/2022:11:52:08 +0000] "GET /favicon.ico HTTP/1.1" 404 27 "http://localhost/index.html" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"
+172.18.0.1 - - [01/Jun/2022:11:52:14 +0000] "GET /Js/index.html HTTP/1.1" 200 1617 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"
+172.18.0.1 - - [01/Jun/2022:11:52:15 +0000] "GET /script.js HTTP/1.1" 404 27 "http://localhost/Js/index.html" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"
+172.18.0.1 - - [01/Jun/2022:11:52:15 +0000] "GET /script.js HTTP/1.1" 404 27 "http://localhost/Js/index.html" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"
+172.18.0.1 - - [01/Jun/2022:11:52:15 +0000] "GET /favicon.ico HTTP/1.1" 499 0 "http://localhost/Js/index.html" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"
+172.18.0.1 - - [01/Jun/2022:11:52:22 +0000] "GET /Js/index.html HTTP/1.1" 304 0 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"
+172.18.0.1 - - [01/Jun/2022:11:52:22 +0000] "GET /script.js HTTP/1.1" 404 27 "http://localhost/Js/index.html" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"

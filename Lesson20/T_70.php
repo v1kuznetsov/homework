@@ -1,52 +1,118 @@
 <?php
 
-class T_70
+namespace RefactoringGuru\State\Conceptual;
+
+/**
+ * Контекст определяет интерфейс, представляющий интерес для клиентов. Он также
+ * хранит ссылку на экземпляр подкласса Состояния, который отображает текущее
+ * состояние Контекста.
+ */
+class Context
 {
-  private int $conditionT_70;
-  private $int;
+    /**
+     * @var State Ссылка на текущее состояние Контекста.
+     */
+    private $state;
 
-  public function __construct (int $int)
-  {
-    if (($int === 1 || $int === 0))
+    public function __construct(State $state)
     {
-      $this->int = $int;
-      $this->conditionT_70 = rand(1, 4);
+        $this->transitionTo($state);
     }
-    else
-    {
-      throw new Exception('Wrong number');
-    }
-  }
 
-  public function changeCondition ()
-  {
-    if ($this->int === 1)
+    /**
+     * Контекст позволяет изменять объект Состояния во время выполнения.
+     */
+    public function transitionTo(State $state): void
     {
-      echo 'perfect' . PHP_EOL;
-      if (!($this->conditionT_70 > 4))
-      {
-        $this->conditionT_70 += 1;
-      }
+        echo "Context: Transition to " . get_class($state) . ".\n";
+        $this->state = $state;
+        $this->state->setContext($this);
     }
-    else
+
+    /**
+     * Контекст делегирует часть своего поведения текущему объекту Состояния.
+     */
+    public function request1(): void
     {
-      echo 'bad' . PHP_EOL;
-      if (!($this->conditionT_70 < 1))
-      {
-        $this->conditionT_70 -= 1;
-      }
+        $this->state->handle1();
     }
-  }
+
+    public function request2(): void
+    {
+        $this->state->handle2();
+    }
+
+    public function request3(): void
+    {
+        $this->state->handle3();
+    }
+
+    public function request4(): void
+    {
+        $this->state->handle4();
+    }
 }
 
-try
+/**
+ * Базовый класс Состояния объявляет методы, которые должны реализовать все
+ * Конкретные Состояния, а также предоставляет обратную ссылку на объект
+ * Контекст, связанный с Состоянием. Эта обратная ссылка может использоваться
+ * Состояниями для передачи Контекста другому Состоянию.
+ */
+abstract class State
 {
-    $t_10 = new T_70($a = readline("(1 or 0)-> "));
-    $t_10->changeCondition();
+    /**
+     * @var Context
+     */
+    protected $context;
+
+    public function setContext(Context $context)
+    {
+        $this->context = $context;
+    }
+
+    abstract public function handle1(): void;
+
+    abstract public function handle2(): void;
 }
-catch(Exception $e)
+
+/**
+ * Конкретные Состояния реализуют различные модели поведения, связанные с
+ * состоянием Контекста.
+ */
+class ConcreteStateA extends State
 {
-    echo "Exception: " . $e->getMessage() . PHP_EOL;
+    public function handle1(): void
+    {
+        echo "ConcreteStateA handles request1.\n";
+        echo "ConcreteStateA wants to change the state of the context.\n";
+        $this->context->transitionTo(new ConcreteStateB());
+    }
+
+    public function handle2(): void
+    {
+        echo "ConcreteStateA handles request2.\n";
+    }
 }
-  
-?>
+
+class ConcreteStateB extends State
+{
+    public function handle1(): void
+    {
+        echo "ConcreteStateB handles request1.\n";
+    }
+
+    public function handle2(): void
+    {
+        echo "ConcreteStateB handles request2.\n";
+        echo "ConcreteStateB wants to change the state of the context.\n";
+        $this->context->transitionTo(new ConcreteStateA());
+    }
+}
+
+/**
+ * Клиентский код.
+ */
+$context = new Context(new ConcreteStateA());
+$context->request1();
+$context->request2();
