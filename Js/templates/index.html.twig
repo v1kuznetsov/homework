@@ -4,57 +4,54 @@
 
 {% block body %}
 <div class="main">
-    <p>Склад</p>
+  {% if form_array is defined %}
+     {% if titles is defined %}
+      <p>
+        {{ titles.store }}
+      </p>
+      {% endif %}
     <form action="/index.html" id="addProduct" method="POST">
+      {% for arr in form_array %}
       <p>
-        <label>id:</br></label>
+      {% if arr.labelName %}
+        <label>{{ arr.labelName }}</br></label>
+      {% endif %}
         
-        <input type="text" name="id" id="id" placeholder="int"/>
+        <input type="text" name="{{ arr.name }}" id="{{ arr.id }}" placeholder="{{ arr.placeholder }}"/>
       </p>
+      {% endfor %}
       <p>
-        <label>Название:</br></label>
-        
-        <input type="text" name="name" id="name" placeholder="string"/>
+        <button class="add" type="submit">{% if titles is defined %}{{ titles.button }}{% endif %}</button>
       </p>
+      {% if titles is defined %}
       <p>
-        <label>Цена:</br></label>
-        
-        <input type="text" name="price" id="price" placeholder="int * 100"/>
+        {{ titles.history }}
       </p>
-      <p>
-        <label>Сезон(квартал):</br></label>
-        
-        <input type="text" name="season" id="season" placeholder="int <= 4"/>
-      </p>
-      <p>
-        <button class="add" type="submit">Добавить продукт</button>
-      </p>
-      <p>
-        История:
-      </p>
+      {% endif %}
       <div>
         <table id="history">
           <tr>
-            <th>Название</th>
-            <th>Цена</th>
-            <th>Сезон(Квартал)</th>
-            <th>id</th>
+          {% for table in tables %}
+            <th>{{ table }}</th>
+          {% endfor %}
           </tr>
         </table>
       </div>
+      {% if titles is defined %}
       <p>
-        Вся таблица:
+        {{ titles.allTable }}
       </p>
+      {% endif %}
       <div>
         <table id="table">
           <tr>
-            <th>Название</th>
-            <th>Цена</th>
-            <th>Сезон(Квартал)</th>
-            <th>id</th>
+          {% for table in tables %}
+            <th>{{ table }}</th>
+          {% endfor %}
           </tr>
         </table>
       </div>
     </form>
-  </div>
+  {% endif %}
+</div>
 {% endblock %}
