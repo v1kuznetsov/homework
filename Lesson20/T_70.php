@@ -1,118 +1,108 @@
 <?php
-
-namespace RefactoringGuru\State\Conceptual;
-
-/**
- * Контекст определяет интерфейс, представляющий интерес для клиентов. Он также
- * хранит ссылку на экземпляр подкласса Состояния, который отображает текущее
- * состояние Контекста.
- */
-class Context
+class StateOne
 {
-    /**
-     * @var State Ссылка на текущее состояние Контекста.
-     */
-    private $state;
-
-    public function __construct(State $state)
+    public function __construct($T_70)
     {
-        $this->transitionTo($state);
+        $this->T_70 = $T_70;
     }
 
-    /**
-     * Контекст позволяет изменять объект Состояния во время выполнения.
-     */
-    public function transitionTo(State $state): void
+    public function one()
     {
-        echo "Context: Transition to " . get_class($state) . ".\n";
-        $this->state = $state;
-        $this->state->setContext($this);
+        $this->T_70->state = new StateOne($this->T_70);
+        echo 'perfect0' . PHP_EOL;
     }
-
-    /**
-     * Контекст делегирует часть своего поведения текущему объекту Состояния.
-     */
-    public function request1(): void
+    public function zero()
     {
-        $this->state->handle1();
-    }
-
-    public function request2(): void
-    {
-        $this->state->handle2();
-    }
-
-    public function request3(): void
-    {
-        $this->state->handle3();
-    }
-
-    public function request4(): void
-    {
-        $this->state->handle4();
+        $this->T_70->state = new StateTwo($this->T_70);
+        echo 'bad2' . PHP_EOL;
     }
 }
 
-/**
- * Базовый класс Состояния объявляет методы, которые должны реализовать все
- * Конкретные Состояния, а также предоставляет обратную ссылку на объект
- * Контекст, связанный с Состоянием. Эта обратная ссылка может использоваться
- * Состояниями для передачи Контекста другому Состоянию.
- */
-abstract class State
+class StateTwo
 {
-    /**
-     * @var Context
-     */
-    protected $context;
-
-    public function setContext(Context $context)
+    public function __construct($T_70)
     {
-        $this->context = $context;
+        $this->T_70 = $T_70;
     }
 
-    abstract public function handle1(): void;
-
-    abstract public function handle2(): void;
-}
-
-/**
- * Конкретные Состояния реализуют различные модели поведения, связанные с
- * состоянием Контекста.
- */
-class ConcreteStateA extends State
-{
-    public function handle1(): void
+    public function one()
     {
-        echo "ConcreteStateA handles request1.\n";
-        echo "ConcreteStateA wants to change the state of the context.\n";
-        $this->context->transitionTo(new ConcreteStateB());
+        $this->T_70->state = new StateOne($this->T_70);
+        echo 'perfect1' . PHP_EOL;
     }
-
-    public function handle2(): void
+    public function zero()
     {
-        echo "ConcreteStateA handles request2.\n";
+        $this->T_70->state = new StateThree($this->T_70);
+        echo 'bad3' . PHP_EOL;
     }
 }
 
-class ConcreteStateB extends State
+class StateThree
 {
-    public function handle1(): void
+    public function __construct($T_70)
     {
-        echo "ConcreteStateB handles request1.\n";
+        $this->T_70 = $T_70;
     }
 
-    public function handle2(): void
+    public function one()
     {
-        echo "ConcreteStateB handles request2.\n";
-        echo "ConcreteStateB wants to change the state of the context.\n";
-        $this->context->transitionTo(new ConcreteStateA());
+        $this->T_70->state = new StateTwo($this->T_70);
+        echo 'perfect2' . PHP_EOL;
+    }
+    public function zero()
+    {
+        $this->T_70->state = new StateFour($this->T_70);
+        echo 'bad4' . PHP_EOL;
     }
 }
 
-/**
- * Клиентский код.
- */
-$context = new Context(new ConcreteStateA());
-$context->request1();
-$context->request2();
+class StateFour
+{
+    public function __construct($T_70)
+    {
+        $this->T_70 = $T_70;
+    }
+
+    public function one()
+    {
+        $this->T_70->state = new StateThree($this->T_70);
+        echo 'perfect3' . PHP_EOL;
+    }
+    public function zero()
+    {
+        $this->T_70->state = new StateFour($this->T_70);
+        echo 'bad5' . PHP_EOL;
+    }
+}
+
+class ChangeState
+{
+    public $state;
+    public $oneZero;
+    public function __construct()
+    {
+        $this->state = new StateOne($this);
+    }
+
+    public function ChangeState($oneZero)
+    {
+        if ($oneZero == 1)
+        {
+            $this->state->one();
+        }
+        else
+        {
+            $this->state->zero(); 
+        }
+    }
+}
+
+
+$T = new ChangeState ();
+$r = 0;
+while ($r != -1)
+{
+    $r = readline();
+    $T->ChangeState($r);  
+}
+?>
