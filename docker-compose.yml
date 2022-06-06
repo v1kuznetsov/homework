@@ -9,13 +9,6 @@ services:
             - mysql
 
 
-    php-cli:
-        build: ./docker/php-cli
-        container_name: php-cli
-        volumes:
-            - ./:/var/www:cached
-
-
     nginx:
         build: ./docker/nginx
         container_name: nginx
