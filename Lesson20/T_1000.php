@@ -9,7 +9,10 @@ class T_1000 implements \SplObserver
 
   public function update(SplSubject $subject)
   {
-    $this->result += 1;
+    // if ($subject == StateOne::class)
+    // {
+      $this->result += 1;
+    // }
   }
 
   public function getSumPerfectWork(): int
