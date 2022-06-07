@@ -1,81 +1,10 @@
 <?php
-class StateOne
-{
-    public function __construct($T_70)
-    {
-        $this->T_70 = $T_70;
-    }
+namespace App\Lesson20;
+use SplObserver;
 
-    public function one()
-    {
-        $this->T_70->state = new StateOne($this->T_70);
-        echo 'perfect0' . PHP_EOL;
-    }
-    public function zero()
-    {
-        $this->T_70->state = new StateTwo($this->T_70);
-        echo 'bad2' . PHP_EOL;
-    }
-}
+require_once '../vendor/autoload.php';
 
-class StateTwo
-{
-    public function __construct($T_70)
-    {
-        $this->T_70 = $T_70;
-    }
-
-    public function one()
-    {
-        $this->T_70->state = new StateOne($this->T_70);
-        echo 'perfect1' . PHP_EOL;
-    }
-    public function zero()
-    {
-        $this->T_70->state = new StateThree($this->T_70);
-        echo 'bad3' . PHP_EOL;
-    }
-}
-
-class StateThree
-{
-    public function __construct($T_70)
-    {
-        $this->T_70 = $T_70;
-    }
-
-    public function one()
-    {
-        $this->T_70->state = new StateTwo($this->T_70);
-        echo 'perfect2' . PHP_EOL;
-    }
-    public function zero()
-    {
-        $this->T_70->state = new StateFour($this->T_70);
-        echo 'bad4' . PHP_EOL;
-    }
-}
-
-class StateFour
-{
-    public function __construct($T_70)
-    {
-        $this->T_70 = $T_70;
-    }
-
-    public function one()
-    {
-        $this->T_70->state = new StateThree($this->T_70);
-        echo 'perfect3' . PHP_EOL;
-    }
-    public function zero()
-    {
-        $this->T_70->state = new StateFour($this->T_70);
-        echo 'bad5' . PHP_EOL;
-    }
-}
-
-class ChangeState
+class T_70 extends StateOne
 {
     public $state;
     public $oneZero;
@@ -90,19 +19,38 @@ class ChangeState
         {
             $this->state->one();
         }
-        else
+        elseif($oneZero == 0)
         {
-            $this->state->zero(); 
+            $this->state->zero();
         }
     }
 }
 
 
-$T = new ChangeState ();
-$r = 0;
-while ($r != -1)
+$T = new T_70 ();
+$hr = new T_1000();
+// $T->state->attach($hr);
+
+$manager = new T_1001();
+
+while (@ $r != -1)
 {
     $r = readline();
-    $T->ChangeState($r);  
+
+    if ($r == 1)
+    {
+        $T->ChangeState($r);
+        echo 'hr - ' . $hr->getSumPerfectWork() . PHP_EOL; 
+    }
+    elseif ($r == 0)
+    {
+        $T->ChangeState($r);
+        echo 'manager - ' . $manager->getSumBadWork() . PHP_EOL;
+    }
+    else
+    {
+        echo 'wrong number' . PHP_EOL;
+        $r = -1;
+    }
 }
 ?>
