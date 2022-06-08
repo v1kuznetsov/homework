@@ -31,17 +31,19 @@ class T_70 implements \SplSubject
         {
             if($this->state instanceof StateOne)
             {
-                if($observer instanceof T_1000)
-                {
-                    $observer->update($this);
-                }
+                $observer->update($this);
+                // if($observer instanceof T_1000)
+                // {
+                //     $observer->update($this);
+                // }
             }
             elseif($this->state instanceof StateFour)
             {
-                if($observer instanceof T_1001)
-                {
-                    $observer->update($this);
-                }
+                $observer->update($this);
+                // if($observer instanceof T_1001)
+                // {
+                //     $observer->update($this);
+                // }
             }
         }
     }
@@ -52,20 +54,20 @@ class T_70 implements \SplSubject
         {
             $this->state->one();
             
-            if ($this->state instanceof StateOne)
-            {
+            // if ($this->state instanceof StateOne)
+            // {
                 $this->notify();
-            }
+            // }
             
         }
         elseif($oneZero == 0)
         {
             $this->state->zero();
 
-            if ($this->state instanceof StateFour)
-            {
+            // if ($this->state instanceof StateFour)
+            // {
                 $this->notify();
-            }
+            // }
         }
     }
 }

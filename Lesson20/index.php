@@ -18,12 +18,14 @@ while (@ $r != -1)
     if ($r == 1)
     {
         $T->ChangeState($r);
-        echo 'hr - ' . $hr->getSumPerfectWork() . PHP_EOL; 
+        echo 'hr - ' . $hr->getSumPerfectWork() . PHP_EOL;
+        echo 'manager - ' . $manager->getSumBadWork() . PHP_EOL; 
     }
     elseif ($r == 0)
     {
         $T->ChangeState($r);
-        echo 'manager - ' . $manager->getSumBadWork() . PHP_EOL;
+        echo 'hr - ' . $hr->getSumPerfectWork() . PHP_EOL;
+        echo 'manager - ' . $manager->getSumBadWork() . PHP_EOL; 
     }
     else
     {

@@ -9,7 +9,10 @@ class T_1001 implements \SplObserver
 
   public function update(SplSubject $subject)
   {
+    if ($subject->state instanceof StateFour)
+    {
       $this->result += 1;
+    }
   }
 
   public function getSumBadWork(): int
