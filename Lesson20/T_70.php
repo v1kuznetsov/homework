@@ -29,22 +29,23 @@ class T_70 implements \SplSubject
     {
         foreach($this->observers as $observer)
         {
-            if($this->state instanceof StateOne)
-            {
-                $observer->update($this);
-                // if($observer instanceof T_1000)
-                // {
-                //     $observer->update($this);
-                // }
-            }
-            elseif($this->state instanceof StateFour)
-            {
-                $observer->update($this);
-                // if($observer instanceof T_1001)
-                // {
-                //     $observer->update($this);
-                // }
-            }
+            $observer->update($this);
+            // if($this->state instanceof StateOne)
+            // {
+            //     $observer->update($this);
+            //     // if($observer instanceof T_1000)
+            //     // {
+            //     //     $observer->update($this);
+            //     // }
+            // }
+            // elseif($this->state instanceof StateFour)
+            // {
+            //     $observer->update($this);
+            //     // if($observer instanceof T_1001)
+            //     // {
+            //     //     $observer->update($this);
+            //     // }
+            // }
         }
     }
 #################################################################
