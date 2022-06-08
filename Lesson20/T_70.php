@@ -3,8 +3,6 @@ namespace App\Lesson20;
 
 use SplObserver;
 
-require_once '../vendor/autoload.php';
-
 class T_70 implements \SplSubject
 {
     public $state;
@@ -72,33 +70,4 @@ class T_70 implements \SplSubject
     }
 }
 
-
-$T = new T_70 ();
-
-$hr = new T_1000();
-$T->attach($hr);
-
-$manager = new T_1001();
-$T->attach($manager);
-
-while (@ $r != -1)
-{
-    $r = readline();
-
-    if ($r == 1)
-    {
-        $T->ChangeState($r);
-        echo 'hr - ' . $hr->getSumPerfectWork() . PHP_EOL; 
-    }
-    elseif ($r == 0)
-    {
-        $T->ChangeState($r);
-        echo 'manager - ' . $manager->getSumBadWork() . PHP_EOL;
-    }
-    else
-    {
-        echo 'wrong number' . PHP_EOL;
-        $r = -1;
-    }
-}
 ?>
