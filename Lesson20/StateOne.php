@@ -10,7 +10,7 @@ class StateOne
 
     public function one()
     {
-        echo 'perfect0' . PHP_EOL;
+        echo 'exelent' . PHP_EOL;
     }
 
     public function zero()

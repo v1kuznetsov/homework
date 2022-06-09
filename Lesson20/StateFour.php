@@ -16,7 +16,7 @@ class StateFour
     
     public function zero()
     {
-        echo 'bad5' . PHP_EOL;
+        echo 'terrible' . PHP_EOL;
     }
 
     public function getCheck()

@@ -6,12 +6,13 @@ use SplObserver;
 class T_70 implements \SplSubject
 {
     public $state;
+    public $previousState;
     public $oneZero;
     public \SplObjectStorage $observers;
 
     public function __construct()
     {
-        $this->state = new StateOne($this);
+        $this->state = new StateTwo($this);
         $this->observers = new \SplObjectStorage();
     }
 #################################################################
@@ -30,22 +31,6 @@ class T_70 implements \SplSubject
         foreach($this->observers as $observer)
         {
             $observer->update($this);
-            // if($this->state instanceof StateOne)
-            // {
-            //     $observer->update($this);
-            //     // if($observer instanceof T_1000)
-            //     // {
-            //     //     $observer->update($this);
-            //     // }
-            // }
-            // elseif($this->state instanceof StateFour)
-            // {
-            //     $observer->update($this);
-            //     // if($observer instanceof T_1001)
-            //     // {
-            //     //     $observer->update($this);
-            //     // }
-            // }
         }
     }
 #################################################################
@@ -54,22 +39,21 @@ class T_70 implements \SplSubject
         if ($oneZero == 1)
         {
             $this->state->one();
-            
-            // if ($this->state instanceof StateOne)
-            // {
+            if ($this->previousState instanceof StateOne)
+            {
                 $this->notify();
-            // }
-            
+            }
         }
         elseif($oneZero == 0)
         {
             $this->state->zero();
-
-            // if ($this->state instanceof StateFour)
-            // {
+            if ($this->previousState instanceof StateFour)
+            {
                 $this->notify();
-            // }
+            }
         }
+        
+        $this->previousState = $this->state;
     }
 }
 
