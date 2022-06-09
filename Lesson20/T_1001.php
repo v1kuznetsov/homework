@@ -9,7 +9,7 @@ class T_1001 implements \SplObserver
 
   public function update(SplSubject $subject)
   {
-    if ($subject->state instanceof StateFour)
+    if ($subject->state instanceof StateFour && $subject->previousState instanceof StateFour)
     {
       $this->result += 1;
     }

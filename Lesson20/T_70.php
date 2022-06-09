@@ -39,18 +39,12 @@ class T_70 implements \SplSubject
         if ($oneZero == 1)
         {
             $this->state->one();
-            if ($this->previousState instanceof StateOne)
-            {
-                $this->notify();
-            }
+            $this->notify();
         }
         elseif($oneZero == 0)
         {
             $this->state->zero();
-            if ($this->previousState instanceof StateFour)
-            {
-                $this->notify();
-            }
+            $this->notify();
         }
         
         $this->previousState = $this->state;
