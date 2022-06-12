@@ -36,11 +36,10 @@ class MainController extends AbstractController
         $product = new Product();
         $form = $this->createForm(StoreType::class, $product);
         $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid())
-        {
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
-            
+
             $entityManger = $registry->getManager();
             $entityManger->persist($product);
             $entityManger->flush();
@@ -54,12 +53,11 @@ class MainController extends AbstractController
     #[Route('/main_rm/{product}', name: 'product_rm')]
     public function removeProduct($product, ManagerRegistry $registry, ProductRepository $productRepository): Response
     {
-        if (!$product)
-        {
-            throw $this->createNotFoundException('No guest found');
+        if (!$product) {
+            throw $this->Exception('Product not found');
         }
         $product = $productRepository->find($product);
-    
+
         $entityManger = $registry->getManager();
         $entityManger->remove($product);
         $entityManger->flush();
@@ -70,14 +68,16 @@ class MainController extends AbstractController
     #[Route('/main_edit/{product}', name: 'product_edit', methods: ['GET', 'POST'])]
     public function editProduct($product, Request $request, ManagerRegistry $registry, ProductRepository $productRepository): Response
     {
+        if (!$product) {
+            throw $this->Exception('Product not found');
+        }
         $product = $productRepository->find($product);
         $form = $this->createForm(StoreType::class, $product, ['action' => $this->generateUrl('product_edit', ['product' => $product->getId()])]);
         $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid())
-        {
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
-            
+
             $entityManger = $registry->getManager();
             $entityManger->flush();
 
