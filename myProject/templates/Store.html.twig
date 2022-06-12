@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Store{% endblock %}
+
+{% block body %}
+    <p>
+      <a href="{{ path('product_add') }}">Add new product</a>
+    </p>
+<p>Product List:</p>
+  {% for product in products %}
+  <div>
+    <p>Product id: {{ product.id }}</p>
+    <p>Product name: {{ product.name }}</p>
+    <p>Product price: {{ product.price }} </p>
+    <p>
+      <a href="{{ path('product_rm', { 'product': product.id }) }}">delete</a>
+    </p>
+    <p>
+      <a href="{{ path('product_edit', { 'product': product.id }) }}">edit</a>
+    </p>
+    <p>############################</p>
+  </div>
+  {% endfor %}
+{% endblock %}
