@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Main Page{% endblock %}
+
+{% block body %}
+<div>
+  <p>
+    <a href="{{ path('product_list') }}">Product list</a>
+  </p>
+  <p>
+    <a href="{{ path('product_add') }}">Add new product</a>
+  </p>
+</div>
+{% endblock %}

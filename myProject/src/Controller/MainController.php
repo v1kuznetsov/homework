@@ -22,6 +22,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
+    #[Route('', name: 'main_page', methods: ['GET', 'POST'])]
+    public function mainPage(): Response
+    {
+        return $this->render('MainPage.html.twig');
+    }
+
     #[Route('/main', name: 'product_list', methods: ['GET', 'POST'])]
     public function productList(ProductRepository $productRepository): Response
     {
