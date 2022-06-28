@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Market{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            {% block header %}
+                <ul>
+                <li><a href="{{ path('category') }}">CATEGORY</a></li>
+                <li><a href="{{ path('list') }}">BASKET</a></li>
+                {% if app.user %}
+                    <li>
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('profile', { 'Email': app.user.userIdentifier }) }}">Profile</a> or <a href="{{ path('logout') }}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        You are anonimus, <a href="{{ path('login') }}">Login</a> or <a href="{{ path('register') }}">Register</a>
+                    </li>
+                {% endif %}
+                </ul>
+            {% endblock %}
+        </header>
+        {% block body %}
+        {% endblock %}
+        <footer>
+            {% block footer %}
+                <div>
+                    <p>Credits</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </div>
+                <div>
+                    <p>Feedback</p>
+                    <p>Kyivstar:+38098</p>
+                    <p>Vodafone:+38066</p>
+                </div>
+            {% endblock %}
+        </footer>
+    </body>
+</html>
