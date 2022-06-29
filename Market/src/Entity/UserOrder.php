@@ -17,6 +17,10 @@ class UserOrder
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
+    #[ORM\OneToOne(targetEntity: BasketOrder::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private $order;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -30,6 +34,18 @@ class UserOrder
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getOrder(): ?BasketOrder
+    {
+        return $this->order;
+    }
+
+    public function setOrder(BasketOrder $order): self
+    {
+        $this->order = $order;
 
         return $this;
     }

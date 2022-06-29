@@ -17,8 +17,9 @@
         <header>
             {% block header %}
                 <ul>
+                <li><a href="{{ path('list') }}">MAINPAGE</a></li>
                 <li><a href="{{ path('category') }}">CATEGORY</a></li>
-                <li><a href="{{ path('list') }}">BASKET</a></li>
+                <li><a href="{{ path('basket') }}">BASKET</a></li>
                 {% if app.user %}
                     <li>
                         You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('profile', { 'Email': app.user.userIdentifier }) }}">Profile</a> or <a href="{{ path('logout') }}">Logout</a>

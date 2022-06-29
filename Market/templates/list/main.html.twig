@@ -8,7 +8,7 @@
       <p><a href="{{ path('productInfo', { 'product': product.id }) }}"><img src="../images/{{ product.image }}" height="200"/></a></p>
       <p>{{ product.name }}</p>
       <p>{{ product.price }} UAH</p>
-      <p><a>Add to basket</a></p>
+      <p><a href="{{ path('basket') }}">Add to basket</a></p>
     </div>
   {% endfor %}
 {% endblock %}

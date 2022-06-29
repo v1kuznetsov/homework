@@ -26,6 +26,9 @@ class ProductsInBasket
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private $total_price;
 
+    #[ORM\OneToOne(mappedBy: 'products', targetEntity: BasketOrder::class, cascade: ['persist', 'remove'])]
+    private $basketOrder;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,23 @@ class ProductsInBasket
     public function setTotalPrice(string $total_price): self
     {
         $this->total_price = $total_price;
+
+        return $this;
+    }
+
+    public function getBasketOrder(): ?BasketOrder
+    {
+        return $this->basketOrder;
+    }
+
+    public function setBasketOrder(BasketOrder $basketOrder): self
+    {
+        // set the owning side of the relation if necessary
+        if ($basketOrder->getProducts() !== $this) {
+            $basketOrder->setProducts($this);
+        }
+
+        $this->basketOrder = $basketOrder;
 
         return $this;
     }
