@@ -4,12 +4,12 @@
 
 {% block body %}
   <div>
-  <h1>Hello {{ user.name }}</h3>
-    <h3>Check your data</h3>
+  <h1>Привет {{ user.name }}</h3>
+    <h3>Проверь свои данные</h3>
     <img src="../images/profile.svg.png" height="100" />
-    <p>Email {{ user.email }}</p>
-    <p>Phone {{ user.phone }}</p>
-    <p>City {{ user.city }}</p>
-    <p>Adress {{ user.adress }}</p>
+    <p>Почта: {{ user.email }}</p>
+    <p>Телефон: {{ user.phone }}</p>
+    <p>Город: {{ user.city }}</p>
+    <p>Адресс: {{ user.adress }}</p>
   </div>
 {% endblock %}

@@ -17,15 +17,16 @@
         <header>
             {% block header %}
                 <ul>
-                <li><a href="{{ path('category') }}">CATEGORY</a></li>
-                <li><a href="{{ path('list') }}">BASKET</a></li>
+                <li><a href="{{ path('list') }}">Главная</a></li>
+                <li><a href="{{ path('category') }}">Категории</a></li>
+                <li><a href="{{ path('basket') }}">Корзина</a></li>
                 {% if app.user %}
                     <li>
-                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('profile', { 'Email': app.user.userIdentifier }) }}">Profile</a> or <a href="{{ path('logout') }}">Logout</a>
+                        Привет {{ app.user.userIdentifier }} <a href="{{ path('profile', { 'Email': app.user.userIdentifier }) }}">Профиль</a> | <a href="{{ path('logout') }}">Выйти</a>
                     </li>
                     {% else %}
                     <li>
-                        You are anonimus, <a href="{{ path('login') }}">Login</a> or <a href="{{ path('register') }}">Register</a>
+                        Вы не вошли, <a href="{{ path('login') }}">Войти</a> | <a href="{{ path('register') }}">Регистрация</a>
                     </li>
                 {% endif %}
                 </ul>
@@ -35,15 +36,6 @@
         {% endblock %}
         <footer>
             {% block footer %}
-                <div>
-                    <p>Credits</p>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                </div>
-                <div>
-                    <p>Feedback</p>
-                    <p>Kyivstar:+38098</p>
-                    <p>Vodafone:+38066</p>
-                </div>
             {% endblock %}
         </footer>
     </body>
