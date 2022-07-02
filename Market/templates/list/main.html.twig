@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All products{% endblock %}
+{% block title %}Все продукты{% endblock %}
 
 {% block body %}
   {% for product in products %}
     <div>
       <p><a href="{{ path('productInfo', { 'product': product.id }) }}"><img src="../images/{{ product.image }}" height="200"/></a></p>
       <p>{{ product.name }}</p>
-      <p>{{ product.price }} UAH</p>
-      <p><a href="{{ path('basket') }}">Add to basket</a></p>
+      <p>{{ product.price }} грн.</p>
     </div>
   {% endfor %}
 {% endblock %}

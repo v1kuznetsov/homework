@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\ProductsInBasket;
+use App\Entity\ProductInBasket;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ProductsInBasket>
+ * @extends ServiceEntityRepository<ProductInBasket>
  *
- * @method ProductsInBasket|null find($id, $lockMode = null, $lockVersion = null)
- * @method ProductsInBasket|null findOneBy(array $criteria, array $orderBy = null)
- * @method ProductsInBasket[]    findAll()
- * @method ProductsInBasket[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ProductInBasket|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ProductInBasket|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ProductInBasket[]    findAll()
+ * @method ProductInBasket[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductsInBasketRepository extends ServiceEntityRepository
+class ProductInBasketRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ProductsInBasket::class);
+        parent::__construct($registry, ProductInBasket::class);
     }
 
-    public function add(ProductsInBasket $entity, bool $flush = false): void
+    public function add(ProductInBasket $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ProductsInBasketRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(ProductsInBasket $entity, bool $flush = false): void
+    public function remove(ProductInBasket $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ProductsInBasketRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return ProductsInBasket[] Returns an array of ProductsInBasket objects
+//     * @return ProductInBasket[] Returns an array of ProductInBasket objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ProductsInBasketRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?ProductsInBasket
+//    public function findOneBySomeField($value): ?ProductInBasket
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')

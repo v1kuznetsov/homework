@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -42,14 +40,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string')]
     private string $adress;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserOrder::class, orphanRemoval: true)]
-    private $userOrders;
-
-    public function __construct()
-    {
-        $this->userOrders = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -167,35 +157,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    /**
-     * @return Collection<int, UserOrder>
-     */
-    public function getUserOrders(): Collection
-    {
-        return $this->userOrders;
-    }
-
-    public function addUserOrder(UserOrder $userOrder): self
-    {
-        if (!$this->userOrders->contains($userOrder)) {
-            $this->userOrders[] = $userOrder;
-            $userOrder->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserOrder(UserOrder $userOrder): self
-    {
-        if ($this->userOrders->removeElement($userOrder)) {
-            // set the owning side to null (unless already changed)
-            if ($userOrder->getUser() === $this) {
-                $userOrder->setUser(null);
-            }
-        }
-
-        return $this;
     }
 }
