@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductInBasketRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductInBasketRepository::class)]
@@ -25,6 +27,14 @@ class ProductInBasket
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private $total_price;
+
+    #[ORM\ManyToMany(targetEntity: ProductOrder::class, mappedBy: 'product')]
+    private $productOrders;
+
+    public function __construct()
+    {
+        $this->productOrders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +85,33 @@ class ProductInBasket
     public function setTotalPrice(string $total_price): self
     {
         $this->total_price = $total_price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductOrder>
+     */
+    public function getProductOrders(): Collection
+    {
+        return $this->productOrders;
+    }
+
+    public function addProductOrder(ProductOrder $productOrder): self
+    {
+        if (!$this->productOrders->contains($productOrder)) {
+            $this->productOrders[] = $productOrder;
+            $productOrder->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductOrder(ProductOrder $productOrder): self
+    {
+        if ($this->productOrders->removeElement($productOrder)) {
+            $productOrder->removeProduct($this);
+        }
 
         return $this;
     }

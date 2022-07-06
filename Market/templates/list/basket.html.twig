@@ -20,5 +20,6 @@
         <p><a href="{{ path('basketRm', { 'id': product.id }) }}">Удалить товар</a></p>
     {% endfor %}
         <h2>Общая сумма: {{ sum }}</h2>
+        <p><a href="{{ path('orderForm') }}">Оформить заказ</a></p>
     </div>
 {% endblock %}

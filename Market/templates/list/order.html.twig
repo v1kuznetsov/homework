@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Оформление заказа{% endblock %}
+
+{% block body %}
+    <div>
+      <form action="{{ path('order') }}">
+      <input type="hidden" name="status" value=2>
+      <label>Город:</label>
+      <input type="text" name="city" placeholder="Город доставки">
+      <label>Адресс:</label>
+      <input type="text" name="adress" placeholder="Адресс доставки">
+      <button type="submit" name="order" >Оформить</button>
+      </form>
+    </div>
+{% endblock %}
