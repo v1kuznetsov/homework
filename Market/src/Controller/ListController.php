@@ -99,8 +99,8 @@ class ListController extends AbstractController
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
         $i = reset($orderArr);
-        
-        if(!$i == false)
+        // dd($i);
+        if(is_array($i))
         {
             $order = $orderRepository->find($i);
         }
@@ -159,8 +159,8 @@ class ListController extends AbstractController
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
         $i = reset($orderArr);
-        // dd($i);
-        if (!$i == false)
+        // dd(gettype($i));
+        if (is_object($i))
         {
             $products = $i->getProduct()->getValues();
             foreach($products as $val)
@@ -247,6 +247,10 @@ class ListController extends AbstractController
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
         $i = reset($orderArr);
+        if(!is_array($i))
+        {
+            return $this->redirectToRoute('list');
+        }
         $order = $orderRepository->find($i);
 
         $status = $request->query->get('status');

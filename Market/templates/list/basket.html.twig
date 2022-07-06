@@ -3,23 +3,29 @@
 {% block title %}Корзина{% endblock %}
 
 {% block body %}
-    <div>
+    <div class="row">
     {% set sum = 0 %}
     {% for product in products %}
-        <img src="../images/{{ product.product.image }}" height="200" />
-        <p>Название: {{ product.product.name }}</p>
-        <p>Описание: {{ product.product.description }}</p>
-        <form action="{{ path('basketChange') }}">
-            <label>Текущее количество:</label>
-            <input type="hidden" name="id" value="{{ product.id }}">
-            <input type="text" name="count" value="{{ product.count }}">
-            <button type="submit" name="changeCount" >Изменить</button>
-        </form>
-        <p>Цена: {{ product.product.price * product.count }} грн.</p>
-        {% set sum = sum + product.product.price * product.count %}
-        <p><a href="{{ path('basketRm', { 'id': product.id }) }}">Удалить товар</a></p>
+    <div class="col-4">
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <p class="text-center"><img src="../images/{{ product.product.image }}" height="200" /></p>
+            <p class="text-center">Название: {{ product.product.name }}</p>
+            <p class="text-center">Описание: {{ product.product.description }}</p>
+            <form action="{{ path('basketChange') }}">
+                <p class="text-center"><label>Текущее количество:</label></p>
+                <p class="text-center"><input type="hidden" name="id" value="{{ product.id }}"></p>
+                <p class="text-center"><input type="text" name="count" value="{{ product.count }}"></p>
+                <p class="text-center"><button class="btn btn-primary" type="submit" name="changeCount" >Изменить</button></p>
+            </form>
+            <p class="text-center">Цена: {{ product.product.price * product.count }} грн.</p>
+                {% set sum = sum + product.product.price * product.count %}
+            <p class="text-center"><a class="btn btn-danger" href="{{ path('basketRm', { 'id': product.id }) }}">Удалить товар</a></p>
+        </div>
+    </div>
     {% endfor %}
-        <h2>Общая сумма: {{ sum }}</h2>
-        <p><a href="{{ path('orderForm') }}">Оформить заказ</a></p>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <h2 class="text-center">Общая сумма: {{ sum }} грн.</h2>
+        </div>
+        <p class="text-center"><a class="btn btn-success" href="{{ path('orderForm') }}">Оформить заказ</a></p>
     </div>
 {% endblock %}

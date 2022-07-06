@@ -3,14 +3,18 @@
 {% block title %}Оформление заказа{% endblock %}
 
 {% block body %}
-    <div>
+    <div class="mb-3">
+      <h1>Заполните данные для доставки</h1>
       <form action="{{ path('order') }}">
-      <input type="hidden" name="status" value=2>
-      <label>Город:</label>
-      <input type="text" name="city" placeholder="Город доставки">
-      <label>Адресс:</label>
-      <input type="text" name="adress" placeholder="Адресс доставки">
-      <button type="submit" name="order" >Оформить</button>
+      <div class="col-md-2">
+        <p class="text-center"><input type="hidden" name="status" value=2></p>
+        <p class="text-center"><label class="form-label">Город:</label></p>
+        <p class="text-center"><input class="form-control"type="text" name="city" placeholder="Город доставки"></p>
+        <p class="text-center"><label class="form-label">Адресс:</label></p>
+        <p class="text-center"><input class="form-control" type="text" name="adress" placeholder="Адресс доставки"></p>
+        <p></p>
+        <p class="text-center"><button class="btn btn-success" type="submit" name="order">Оформить</button></p>
+      </div>
       </form>
     </div>
 {% endblock %}

@@ -3,11 +3,15 @@
 {% block title %}Все продукты{% endblock %}
 
 {% block body %}
+<div class="row">
   {% for product in products %}
-    <div>
-      <p><a href="{{ path('productInfo', { 'product': product.id }) }}"><img src="../images/{{ product.image }}" height="200"/></a></p>
-      <p>{{ product.name }}</p>
-      <p>{{ product.price }} грн.</p>
+  <div class="col-4">
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
+      <p class="text-center"><a href="{{ path('productInfo', { 'product': product.id }) }}"><img src="../images/{{ product.image }}" height="200"/></a></p>
+      <p class="text-center">{{ product.name }}</p>
+      <p class="text-center">{{ product.price }} грн.</p>
     </div>
+  </div>
   {% endfor %}
+</div>
 {% endblock %}

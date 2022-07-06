@@ -3,8 +3,10 @@
 {% block title %}Категории{% endblock %}
 
 {% block body %}
-<p><a href="{{ path('pc') }}">ПК</a></p>
-<p><a href="{{ path('laptop') }}">Ноутбуки</a></p>
-<p><a href="{{ path('tablet') }}">Планшеты</a></p>
-<p><a href="{{ path('phone') }}">Телефоны</a></p>
+<ul class="list-group">
+  <li class="list-group-item"><a class="nav-link" href="{{ path('pc') }}">ПК</a></li>
+  <li class="list-group-item"><a class="nav-link" href="{{ path('laptop') }}">Ноутбуки</a></li>
+  <li class="list-group-item"><a class="nav-link" href="{{ path('tablet') }}">Планшеты</a></li>
+  <li class="list-group-item"><a class="nav-link" href="{{ path('phone') }}">Телефоны</a></li>
+</ul>
 {% endblock %}

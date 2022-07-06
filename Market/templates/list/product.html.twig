@@ -3,11 +3,13 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block body %}
-    <div>
-        <img src="../images/{{ product.image }}" height="200" />
-        <p>{{ product.name }}</p>
-        <p>{{ product.description }}</p>
-        <p>{{ product.price }} грн.</p>
-        <p><a href="{{ path('basketAdd',  { 'id': product.id }) }}" >Добавить в корзину</a></p>
+    <div class="container">
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <p class="text-center"><img src="../images/{{ product.image }}" height="200" /></p>
+        <p class="text-center">{{ product.name }}</p>
+        <p class="text-center">{{ product.description }}</p>
+        <p class="text-center">{{ product.price }} грн.</p>
+        <p class="text-center"><a class="btn btn-success" href="{{ path('basketAdd',  { 'id': product.id }) }}" >Добавить в корзину</a></p>
+    </div>
     </div>
 {% endblock %}
