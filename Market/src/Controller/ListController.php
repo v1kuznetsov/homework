@@ -24,8 +24,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 
-
-
 class ListController extends AbstractController
 {
     private $requestStack;
@@ -75,7 +73,7 @@ class ListController extends AbstractController
         $products = $productRepository->findBy(['category' => 4]);
         return $this->render('list/main.html.twig', ['products' => $products]);
     }
-#
+
     #[Route('/product/{product}', name: 'productInfo')]
     public function productInfo($product, ProductRepository $productRepository): Response
     {
@@ -83,7 +81,7 @@ class ListController extends AbstractController
 
         return $this->render('list/product.html.twig', ['product' => $product]);
     }
-#
+
     #[Route('/profile', name: 'profile')]
     public function profile(UserRepository $users): Response
     {
@@ -99,29 +97,15 @@ class ListController extends AbstractController
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
         $i = reset($orderArr);
-        // dd($i);
-        if(is_object($i))
-        {
+        if (is_object($i)) {
             $order = $orderRepository->find($i);
+        } else {
+            $order = (new ProductOrder());
         }
-        else 
-        {
-            $order = (new ProductOrder);
-        }
-        // $order = $orderRepository->remove($order);
-        // $em->flush();
-        // $session->clear();
-        // dd($order);
-        
-        
 
         $product = $productRepository->find($id);
         $price = $product->getPrice();
         $total_price = $price;
-
-        // if($productInBasketRepository->find($product)){
-        //     return $this->redirectToRoute('basket'); 
-        // }
 
         $addProduct = (new ProductInBasket())
             ->setCount(1)
@@ -130,25 +114,25 @@ class ListController extends AbstractController
             ->setTotalPrice($price)
             ->addProductOrder($order);
 
-        if(isset($order)){
+        if (isset($order)) {
             $total_price = $order->getTotalPrice();
         }
 
-        
+
 
         $order
         ->setTotalPrice($total_price += $price)
         ->addProduct($addProduct)
         ->setStatus(1);
-        
+
         $em->persist($addProduct);
         $em->persist($order);
-        
+
         $em->flush();
 
-            $orderId = $order->getId();
-            $session->clear();
-            $session->set($orderId, $order);
+        $orderId = $order->getId();
+        $session->clear();
+        $session->set($orderId, $order);
 
         return $this->redirectToRoute('basket');
     }
@@ -159,16 +143,13 @@ class ListController extends AbstractController
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
         $i = reset($orderArr);
-        // dd($i);
-        if (is_object($i))
-        {
+        if (is_object($i)) {
             $products = $i->getProduct()->getValues();
-            foreach($products as $val)
-            {
+            foreach ($products as $val) {
                 $productsId[] = $val->getId();
             }
             $products = $productInBasketRepository->findBy(['id' => $productsId]);
-            
+
             return $this->render('list/basket.html.twig', ['products' => $products]);
         }
         return $this->render('list/basket.html.twig', ['products' => []]);
@@ -176,7 +157,7 @@ class ListController extends AbstractController
 
     #[Route('/basket/rm/{id}', name: 'basketRm')]
     public function basketRm($id, ManagerRegistry $registry, ProductInBasketRepository $productInBasketRepository, ProductOrderRepository $orderRepository, EntityManagerInterface $em): Response
-    {   
+    {
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
         $i = reset($orderArr);
@@ -189,7 +170,7 @@ class ListController extends AbstractController
         $order_price = $order->getTotalPrice();
 
         $order_price = $order_price - $procuct_total_price;
-        
+
         $order->setTotalPrice($order_price);
         $em->persist($order);
 
@@ -228,7 +209,7 @@ class ListController extends AbstractController
         $order_price = $order_price + ($price * $count);
 
         $order->setTotalPrice($order_price);
-        
+
         $em->persist($order);
 
         $em->flush();
@@ -247,8 +228,7 @@ class ListController extends AbstractController
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
         $i = reset($orderArr);
-        if(!is_object($i))
-        {
+        if (!is_object($i)) {
             return $this->redirectToRoute('list');
         }
         $order = $orderRepository->find($i);
@@ -264,10 +244,9 @@ class ListController extends AbstractController
 
         $em->persist($order);
         $em->flush();
-        
-        if($order->getStatus() == 2)
-        {
-            $session->clear(); 
+
+        if ($order->getStatus() == 2) {
+            $session->clear();
         }
         return $this->redirectToRoute('list');
     }
