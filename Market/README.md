@@ -13,7 +13,8 @@
 	php bin/console doctrine:migrations:migrate
 	
 Открыть новое окно консоли и прописать:
-	sudo docker exec -it mysql bash:
+
+	sudo docker exec -it mysql bash
 
 После в контейнере mysql прописать:
 
