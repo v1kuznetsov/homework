@@ -130,8 +130,8 @@ class ListController extends AbstractController
 
         $em->flush();
 
+
         $orderId = $order->getId();
-        $session->clear();
         $session->set($orderId, $order);
 
         return $this->redirectToRoute('basket');
@@ -246,7 +246,7 @@ class ListController extends AbstractController
         $em->flush();
 
         if ($order->getStatus() == 2) {
-            $session->clear();
+            $session->remove($order->getId());
         }
         return $this->redirectToRoute('list');
     }
