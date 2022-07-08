@@ -96,12 +96,29 @@ class ListController extends AbstractController
     {
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
-        $i = reset($orderArr);
-        if (is_object($i)) {
-            $order = $orderRepository->find($i);
+
+        $user = $this->getUser();
+        if ($user) {
+            $i;
+            foreach ($orderArr as $val) {
+                if (!is_string($val)) {
+                    $i = $val;
+                }
+            }
+            if (!isset($i)) {
+                $order = (new ProductOrder());
+            } else {
+                $order = $orderRepository->find($i);
+            }
         } else {
-            $order = (new ProductOrder());
+            $i = reset($orderArr);
+            if (is_object($i)) {
+                $order = $orderRepository->find($i);
+            } else {
+                $order = (new ProductOrder());
+            }
         }
+
 
         $product = $productRepository->find($id);
         $price = $product->getPrice();
@@ -142,15 +159,39 @@ class ListController extends AbstractController
     {
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
-        $i = reset($orderArr);
-        if (is_object($i)) {
-            $products = $i->getProduct()->getValues();
-            foreach ($products as $val) {
-                $productsId[] = $val->getId();
-            }
-            $products = $productInBasketRepository->findBy(['id' => $productsId]);
 
-            return $this->render('list/basket.html.twig', ['products' => $products]);
+        $user = $this->getUser();
+
+        if ($user) {
+            $i;
+            foreach ($orderArr as $val) {
+                if (!is_string($val)) {
+                    $i = $val;
+                }
+            }
+
+            if (isset($i)) {
+                $products = $i->getProduct()->getValues();
+                foreach ($products as $val) {
+                    $productsId[] = $val->getId();
+                }
+                $products = $productInBasketRepository->findBy(['id' => $productsId]);
+
+                return $this->render('list/basket.html.twig', ['products' => $products]);
+            } else {
+                return $this->render('list/basket.html.twig', ['products' => []]);
+            }
+        } else {
+            $i = reset($orderArr);
+            if (is_object($i)) {
+                $products = $i->getProduct()->getValues();
+                foreach ($products as $val) {
+                    $productsId[] = $val->getId();
+                }
+                $products = $productInBasketRepository->findBy(['id' => $productsId]);
+
+                return $this->render('list/basket.html.twig', ['products' => $products]);
+            }
         }
         return $this->render('list/basket.html.twig', ['products' => []]);
     }
@@ -160,8 +201,23 @@ class ListController extends AbstractController
     {
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
-        $i = reset($orderArr);
-        $order = $orderRepository->find($i);
+
+
+        $user = $this->getUser();
+        if ($user) {
+            $i;
+            foreach ($orderArr as $val) {
+                if (!is_string($val)) {
+                    $i = $val;
+                }
+            }
+            if (isset($i)) {
+                $order = $orderRepository->find($i);
+            }
+        } else {
+            $i = reset($orderArr);
+            $order = $orderRepository->find($i);
+        }
 
         $product = $productInBasketRepository->find($id);
         $count = $product->getCount();
@@ -186,8 +242,23 @@ class ListController extends AbstractController
     {
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
-        $i = reset($orderArr);
-        $order = $orderRepository->find($i);
+
+        $user = $this->getUser();
+        if ($user) {
+            $i;
+            foreach ($orderArr as $val) {
+                if (!is_string($val)) {
+                    $i = $val;
+                }
+            }
+            if (isset($i)) {
+                $order = $orderRepository->find($i);
+            }
+        } else {
+            $i = reset($orderArr);
+            $order = $orderRepository->find($i);
+        }
+
         $order_price = $order->getTotalPrice();
 
 
@@ -227,27 +298,64 @@ class ListController extends AbstractController
     {
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
-        $i = reset($orderArr);
-        if (!is_object($i)) {
+
+
+        $user = $this->getUser();
+        if ($user) {
+            $i;
+            foreach ($orderArr as $val) {
+                if (!is_string($val)) {
+                    $i = $val;
+                }
+            }
+            if (isset($i)) {
+                if (!is_object($i)) {
+                    return $this->redirectToRoute('list');
+                }
+                $order = $orderRepository->find($i);
+
+                $status = $request->query->get('status');
+                $city = $request->query->get('city');
+                $adress = $request->query->get('adress');
+
+                $order
+                    ->setStatus($status)
+                    ->setCity($city)
+                    ->setAdress($adress);
+
+                $em->persist($order);
+                $em->flush();
+
+                if ($order->getStatus() == 2) {
+                    $session->remove($order->getId());
+                }
+                return $this->redirectToRoute('list');
+            } else {
+                return $this->redirectToRoute('list');
+            }
+        } else {
+            $i = reset($orderArr);
+            if (!is_object($i)) {
+                return $this->redirectToRoute('list');
+            }
+            $order = $orderRepository->find($i);
+
+            $status = $request->query->get('status');
+            $city = $request->query->get('city');
+            $adress = $request->query->get('adress');
+
+            $order
+                ->setStatus($status)
+                ->setCity($city)
+                ->setAdress($adress);
+
+            $em->persist($order);
+            $em->flush();
+
+            if ($order->getStatus() == 2) {
+                $session->remove($order->getId());
+            }
             return $this->redirectToRoute('list');
         }
-        $order = $orderRepository->find($i);
-
-        $status = $request->query->get('status');
-        $city = $request->query->get('city');
-        $adress = $request->query->get('adress');
-
-        $order
-            ->setStatus($status)
-            ->setCity($city)
-            ->setAdress($adress);
-
-        $em->persist($order);
-        $em->flush();
-
-        if ($order->getStatus() == 2) {
-            $session->remove($order->getId());
-        }
-        return $this->redirectToRoute('list');
     }
 }

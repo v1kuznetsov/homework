@@ -33,7 +33,7 @@
                 {% endif %}
             </ul>
                 {% if app.user %}
-                        Привет {{ app.user.userIdentifier }} <a class="btn btn-primary" href="{{ path('profile', { 'Email': app.user.userIdentifier }) }}">Профиль</a> | <a class="btn btn-danger" href="{{ path('logout') }}">Выйти</a>
+                        Привет {{ app.user.name }} <a class="btn btn-primary" href="{{ path('profile', { 'Email': app.user.userIdentifier }) }}">Профиль</a> | <a class="btn btn-danger" href="{{ path('logout') }}">Выйти</a>
                     {% else %}
                         Вы не вошли, <a class="btn btn-primary" href="{{ path('login') }}">Войти</a> | <a class="btn btn-danger" href="{{ path('register') }}">Регистрация</a>
                 {% endif %}
