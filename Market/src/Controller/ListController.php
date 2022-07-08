@@ -100,7 +100,7 @@ class ListController extends AbstractController
         $orderArr = $session->all();
         $i = reset($orderArr);
         // dd($i);
-        if(is_array($i))
+        if(is_object($i))
         {
             $order = $orderRepository->find($i);
         }
@@ -159,7 +159,7 @@ class ListController extends AbstractController
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
         $i = reset($orderArr);
-        // dd(gettype($i));
+        // dd($i);
         if (is_object($i))
         {
             $products = $i->getProduct()->getValues();
@@ -247,7 +247,7 @@ class ListController extends AbstractController
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
         $i = reset($orderArr);
-        if(!is_array($i))
+        if(!is_object($i))
         {
             return $this->redirectToRoute('list');
         }
@@ -264,7 +264,7 @@ class ListController extends AbstractController
 
         $em->persist($order);
         $em->flush();
-
+        
         if($order->getStatus() == 2)
         {
             $session->clear(); 

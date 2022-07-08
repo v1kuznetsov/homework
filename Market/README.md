@@ -1,7 +1,11 @@
 В консоли прописать:
+
 	sudo docker compose up -d
+	
 В том же окне написать:
+
 	sudo docker exec -it php-fpm bash
+	
 В открывшемся контейнере php прописать:
 
 	composer install
