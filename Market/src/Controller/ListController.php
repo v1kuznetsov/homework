@@ -50,28 +50,28 @@ class ListController extends AbstractController
     public function pcList(ProductRepository $productRepository): Response
     {
         $products = $productRepository->findBy(['category' => 1]);
-        return $this->render('list/main.html.twig', ['products' => $products]);
+        return $this->render('list/main.html.twig', ['products' => $products, 'category' => 1]);
     }
 
     #[Route('/laptops', name: 'laptop')]
     public function laptopList(ProductRepository $productRepository): Response
     {
         $products = $productRepository->findBy(['category' => 2]);
-        return $this->render('list/main.html.twig', ['products' => $products]);
+        return $this->render('list/main.html.twig', ['products' => $products, 'category' => 2]);
     }
 
     #[Route('/tablets', name: 'tablet')]
     public function tabletList(ProductRepository $productRepository): Response
     {
         $products = $productRepository->findBy(['category' => 3]);
-        return $this->render('list/main.html.twig', ['products' => $products]);
+        return $this->render('list/main.html.twig', ['products' => $products, 'category' => 3]);
     }
 
     #[Route('/phones', name: 'phone')]
     public function phoneList(ProductRepository $productRepository): Response
     {
         $products = $productRepository->findBy(['category' => 4]);
-        return $this->render('list/main.html.twig', ['products' => $products]);
+        return $this->render('list/main.html.twig', ['products' => $products, 'category' => 4]);
     }
 
     #[Route('/product/{product}', name: 'productInfo')]
@@ -280,5 +280,42 @@ class ListController extends AbstractController
         {
             return $this->redirectToRoute('list');
         }
+    }
+
+    #[Route('/search', name: 'search')]
+    public function search(ProductRepository $productRepository, Request $request, EntityManagerInterface $em, ManagerRegistry $registry): Response
+    {
+        $search = $request->query->get('search');
+        $em = $registry->getManager();
+
+        $productsName = $em->createQuery("SELECT u FROM App\Entity\Product u WHERE u.name LIKE '%$search%'")->getResult();
+        $productsDesc = $em->createQuery("SELECT u FROM App\Entity\Product u WHERE u.description LIKE '%$search%'")->getResult();
+        $products = array_merge($productsName, $productsDesc);
+
+        foreach($products as $key1 => $val1)
+        {
+            foreach($products as $key2 => $val2)
+            {
+                if($key2 <= $key1)
+                {
+                    continue;
+                }
+                if($val2 === $val1)
+                {
+                    unset($products[$key2]);
+                }
+            }
+        }
+        if($category = $request->query->get('category'))
+        {
+            foreach($products as $key => $val)
+            {
+                if($val->getCategory()->getId() != $category)
+                {
+                    unset($products[$key]);
+                }
+            }
+        }
+        return $this->render('list/main.html.twig', ['products' => $products]);
     }
 }

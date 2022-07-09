@@ -28,6 +28,15 @@
                 <li><a class="nav-link px-2 text-white" href="{{ path('list') }}">Главная</a></li>
                 <li><a class="nav-link px-2 text-white" href="{{ path('category') }}">Категории</a></li>
                 <li><a class="nav-link px-2 text-white" href="{{ path('basket') }}">Корзина</a></li>
+                <li>
+                    <form action="{{ path('search') }}">
+                        {% if category is defined %}
+                            <input type="hidden" name="category" value={{ category }}>
+                        {% endif %}
+                        <input type="search" name="search" placeholder="Найти...">
+                        <button class="btn btn-primary" type="submit">Найти</button>
+                    </form>
+                </li>
                 {% if is_granted('ROLE_ADMIN')  %}
                     <li><a class="nav-link px-2 text-white" href="{{ path('admin') }}">Панель администратора</a></li>
                 {% endif %}
