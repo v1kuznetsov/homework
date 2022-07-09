@@ -106,7 +106,24 @@ class ListController extends AbstractController
             $order = $orderRepository->find($i);
         }
 
+        
         $product = $productRepository->find($id);
+        if($order->getId() !== null)
+        {
+            $products = $i->getProduct()->getValues();
+            $productsId = [];
+            foreach ($products as $val)
+            {
+                $productsId[] = $val->getProduct()->getId();
+            }
+            foreach ($productsId as $val)
+            {
+                if($val === $product->getId())
+                {
+                    return $this->redirectToRoute('basket');
+                }
+            }
+        }
         $price = $product->getPrice();
         $total_price = $price;
 
@@ -155,6 +172,12 @@ class ListController extends AbstractController
             {
                 $productsId[] = $val->getId();
             }
+
+            if(!isset($productsId))
+            {
+                return $this->render('list/basket.html.twig', ['products' => $products]); 
+            }
+
             $products = $productInBasketRepository->findBy(['id' => $productsId]);
 
             return $this->render('list/basket.html.twig', ['products' => $products]);
@@ -179,19 +202,22 @@ class ListController extends AbstractController
 
         $product = $productInBasketRepository->find($id);
         $count = $product->getCount();
-        $price = $product->getTotalPrice();
-        $procuct_total_price = $price * $count;
+        $procuct_total_price = $product->getTotalPrice();
         $order_price = $order->getTotalPrice();
 
         $order_price = $order_price - $procuct_total_price;
 
-        $order->setTotalPrice($order_price);
-        $em->persist($order);
+        $order
+        ->setTotalPrice($order_price)
+        ->removeProduct($product);
 
-        $entityManger = $registry->getManager();
-        $entityManger->remove($product);
+        $em->remove($product);
+        $em->persist($order);
         $em->flush();
 
+        $orderId = $order->getId();
+        $session->set($orderId, $order);
+        
         return $this->redirectToRoute('basket');
     }
 
@@ -221,19 +247,24 @@ class ListController extends AbstractController
 
         $order_price = $order_price - $product_total_price;
 
-        $order->setTotalPrice($order_price);
-
-
         $product->setCount($count);
         $product->setTotalPrice($price * $count);
 
         $order_price = $order_price + ($price * $count);
 
-        $order->setTotalPrice($order_price);
+        $order
+        ->setTotalPrice($order_price)
+        ->removeProduct($product)
+        ->addProduct($product);
 
+        $em->persist($product);
         $em->persist($order);
 
         $em->flush();
+
+        $orderId = $order->getId();
+        $session->set($orderId, $order);
+        
         return $this->redirectToRoute('basket');
     }
 
@@ -252,10 +283,6 @@ class ListController extends AbstractController
         $i = array_pop($orderArr);
         if (isset($i) && !is_string($i))
         {
-            if (!is_object($i))
-            {
-                return $this->redirectToRoute('list');
-            }
             $order = $orderRepository->find($i);
 
             $status = $request->query->get('status');
