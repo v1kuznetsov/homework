@@ -96,29 +96,15 @@ class ListController extends AbstractController
     {
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
-
-        $user = $this->getUser();
-        if ($user) {
-            $i;
-            foreach ($orderArr as $val) {
-                if (!is_string($val)) {
-                    $i = $val;
-                }
-            }
-            if (!isset($i)) {
-                $order = (new ProductOrder());
-            } else {
-                $order = $orderRepository->find($i);
-            }
-        } else {
-            $i = reset($orderArr);
-            if (is_object($i)) {
-                $order = $orderRepository->find($i);
-            } else {
-                $order = (new ProductOrder());
-            }
+        $i = array_pop($orderArr);
+        if (is_string($i))
+        {
+            $order = (new ProductOrder());
         }
-
+        else
+        {
+            $order = $orderRepository->find($i);
+        }
 
         $product = $productRepository->find($id);
         $price = $product->getPrice();
@@ -131,7 +117,8 @@ class ListController extends AbstractController
             ->setTotalPrice($price)
             ->addProductOrder($order);
 
-        if (isset($order)) {
+        if (isset($order))
+        {
             $total_price = $order->getTotalPrice();
         }
 
@@ -159,41 +146,23 @@ class ListController extends AbstractController
     {
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
+        $i = array_pop($orderArr);
 
-        $user = $this->getUser();
-
-        if ($user) {
-            $i;
-            foreach ($orderArr as $val) {
-                if (!is_string($val)) {
-                    $i = $val;
-                }
+        if (isset($i) && !is_string($i))
+        {
+            $products = $i->getProduct()->getValues();
+            foreach ($products as $val)
+            {
+                $productsId[] = $val->getId();
             }
+            $products = $productInBasketRepository->findBy(['id' => $productsId]);
 
-            if (isset($i)) {
-                $products = $i->getProduct()->getValues();
-                foreach ($products as $val) {
-                    $productsId[] = $val->getId();
-                }
-                $products = $productInBasketRepository->findBy(['id' => $productsId]);
-
-                return $this->render('list/basket.html.twig', ['products' => $products]);
-            } else {
-                return $this->render('list/basket.html.twig', ['products' => []]);
-            }
-        } else {
-            $i = reset($orderArr);
-            if (is_object($i)) {
-                $products = $i->getProduct()->getValues();
-                foreach ($products as $val) {
-                    $productsId[] = $val->getId();
-                }
-                $products = $productInBasketRepository->findBy(['id' => $productsId]);
-
-                return $this->render('list/basket.html.twig', ['products' => $products]);
-            }
+            return $this->render('list/basket.html.twig', ['products' => $products]);
+        } 
+        else 
+        {
+            return $this->render('list/basket.html.twig', ['products' => []]);
         }
-        return $this->render('list/basket.html.twig', ['products' => []]);
     }
 
     #[Route('/basket/rm/{id}', name: 'basketRm')]
@@ -201,23 +170,12 @@ class ListController extends AbstractController
     {
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
-
-
-        $user = $this->getUser();
-        if ($user) {
-            $i;
-            foreach ($orderArr as $val) {
-                if (!is_string($val)) {
-                    $i = $val;
-                }
-            }
-            if (isset($i)) {
-                $order = $orderRepository->find($i);
-            }
-        } else {
-            $i = reset($orderArr);
+        $i = array_pop($orderArr);
+        if (isset($i) && !is_string($i))
+        {
             $order = $orderRepository->find($i);
         }
+        
 
         $product = $productInBasketRepository->find($id);
         $count = $product->getCount();
@@ -244,20 +202,12 @@ class ListController extends AbstractController
         $orderArr = $session->all();
 
         $user = $this->getUser();
-        if ($user) {
-            $i;
-            foreach ($orderArr as $val) {
-                if (!is_string($val)) {
-                    $i = $val;
-                }
-            }
-            if (isset($i)) {
-                $order = $orderRepository->find($i);
-            }
-        } else {
-            $i = reset($orderArr);
+        $i = array_pop($orderArr);
+        if (isset($i) && !is_string($i))
+        {
             $order = $orderRepository->find($i);
         }
+        
 
         $order_price = $order->getTotalPrice();
 
@@ -299,43 +249,11 @@ class ListController extends AbstractController
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
 
-
-        $user = $this->getUser();
-        if ($user) {
-            $i;
-            foreach ($orderArr as $val) {
-                if (!is_string($val)) {
-                    $i = $val;
-                }
-            }
-            if (isset($i)) {
-                if (!is_object($i)) {
-                    return $this->redirectToRoute('list');
-                }
-                $order = $orderRepository->find($i);
-
-                $status = $request->query->get('status');
-                $city = $request->query->get('city');
-                $adress = $request->query->get('adress');
-
-                $order
-                    ->setStatus($status)
-                    ->setCity($city)
-                    ->setAdress($adress);
-
-                $em->persist($order);
-                $em->flush();
-
-                if ($order->getStatus() == 2) {
-                    $session->remove($order->getId());
-                }
-                return $this->redirectToRoute('list');
-            } else {
-                return $this->redirectToRoute('list');
-            }
-        } else {
-            $i = reset($orderArr);
-            if (!is_object($i)) {
+        $i = array_pop($orderArr);
+        if (isset($i) && !is_string($i))
+        {
+            if (!is_object($i))
+            {
                 return $this->redirectToRoute('list');
             }
             $order = $orderRepository->find($i);
@@ -352,9 +270,14 @@ class ListController extends AbstractController
             $em->persist($order);
             $em->flush();
 
-            if ($order->getStatus() == 2) {
+            if ($order->getStatus() == 2)
+            {
                 $session->remove($order->getId());
             }
+            return $this->redirectToRoute('list');
+        }
+        else
+        {
             return $this->redirectToRoute('list');
         }
     }

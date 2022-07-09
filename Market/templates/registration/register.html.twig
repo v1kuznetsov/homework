@@ -3,7 +3,7 @@
 {% block title %}Register{% endblock %}
 {% block header %}{% endblock %}
 {% block body %}
-    <h1>Register or <a href="{{ path('login') }}">login</a></h1>
+    <h1>Зарегестрируйтесь или <a href="{{ path('login') }}">войдите в свой профиль</a></h1>
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
@@ -15,6 +15,8 @@
             label: 'Password'
         }) }}
 
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-primary">Регистрация</button>
+        <span>или</span>
+        <a class="btn btn-danger" href="{{ path('list') }}">Продолжить без регистрации</a>
     {{ form_end(registrationForm) }}
 {% endblock %}

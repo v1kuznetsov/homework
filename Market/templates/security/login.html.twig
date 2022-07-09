@@ -4,10 +4,10 @@
 {% block header %}{% endblock %}
 {% block body %}
 <form method="post">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in or <a href="{{ path('register') }}">register</a></h1>
-    <label for="inputEmail">Email</label>
+    <h1 class="h3 mb-3 font-weight-normal">Пожалуйста войдите или <a href="{{ path('register') }}">зарегестрируйтесь</a></h1>
+    <label for="inputEmail">Почта</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
+    <label for="inputPassword">Пароль</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
     <input type="hidden" name="_csrf_token"
@@ -25,8 +25,8 @@
         </div>
     #}
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
+    <button class="btn btn-lg btn-primary" type="submit">Войти</button>
+    <span>или</span>
+    <a class="btn btn-danger" href="{{ path('list') }}">Продолжить без входа</a>
 </form>
 {% endblock %}

@@ -18,7 +18,7 @@
 
 После в контейнере mysql прописать:
 
-	sudo mysql -uroot -p
+	mysql -uroot -p
 	
 В появившемся окне написать без ("):"root"
 
