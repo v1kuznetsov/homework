@@ -97,29 +97,22 @@ class ListController extends AbstractController
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
         $i = array_pop($orderArr);
-        if (is_string($i))
-        {
+        if (is_string($i)) {
             $order = (new ProductOrder());
-        }
-        else
-        {
+        } else {
             $order = $orderRepository->find($i);
         }
 
-        
+
         $product = $productRepository->find($id);
-        if($order->getId() !== null)
-        {
+        if ($order->getId() !== null) {
             $products = $i->getProduct()->getValues();
             $productsId = [];
-            foreach ($products as $val)
-            {
+            foreach ($products as $val) {
                 $productsId[] = $val->getProduct()->getId();
             }
-            foreach ($productsId as $val)
-            {
-                if($val === $product->getId())
-                {
+            foreach ($productsId as $val) {
+                if ($val === $product->getId()) {
                     return $this->redirectToRoute('basket');
                 }
             }
@@ -134,12 +127,9 @@ class ListController extends AbstractController
             ->setTotalPrice($price)
             ->addProductOrder($order);
 
-        if (isset($order))
-        {
+        if (isset($order)) {
             $total_price = $order->getTotalPrice();
         }
-
-
 
         $order
         ->setTotalPrice($total_price += $price)
@@ -165,25 +155,20 @@ class ListController extends AbstractController
         $orderArr = $session->all();
         $i = array_pop($orderArr);
 
-        if (isset($i) && !is_string($i))
-        {
+        if (isset($i) && !is_string($i)) {
             $products = $i->getProduct()->getValues();
-            foreach ($products as $val)
-            {
+            foreach ($products as $val) {
                 $productsId[] = $val->getId();
             }
 
-            if(!isset($productsId))
-            {
-                return $this->render('list/basket.html.twig', ['products' => $products]); 
+            if (!isset($productsId)) {
+                return $this->render('list/basket.html.twig', ['products' => $products]);
             }
 
             $products = $productInBasketRepository->findBy(['id' => $productsId]);
 
             return $this->render('list/basket.html.twig', ['products' => $products]);
-        } 
-        else 
-        {
+        } else {
             return $this->render('list/basket.html.twig', ['products' => []]);
         }
     }
@@ -194,11 +179,10 @@ class ListController extends AbstractController
         $session = $this->requestStack->getSession();
         $orderArr = $session->all();
         $i = array_pop($orderArr);
-        if (isset($i) && !is_string($i))
-        {
+
+        if (isset($i) && !is_string($i)) {
             $order = $orderRepository->find($i);
         }
-        
 
         $product = $productInBasketRepository->find($id);
         $count = $product->getCount();
@@ -217,7 +201,7 @@ class ListController extends AbstractController
 
         $orderId = $order->getId();
         $session->set($orderId, $order);
-        
+
         return $this->redirectToRoute('basket');
     }
 
@@ -229,11 +213,9 @@ class ListController extends AbstractController
 
         $user = $this->getUser();
         $i = array_pop($orderArr);
-        if (isset($i) && !is_string($i))
-        {
+        if (isset($i) && !is_string($i)) {
             $order = $orderRepository->find($i);
         }
-        
 
         $order_price = $order->getTotalPrice();
 
@@ -264,7 +246,7 @@ class ListController extends AbstractController
 
         $orderId = $order->getId();
         $session->set($orderId, $order);
-        
+
         return $this->redirectToRoute('basket');
     }
 
@@ -281,8 +263,17 @@ class ListController extends AbstractController
         $orderArr = $session->all();
 
         $i = array_pop($orderArr);
-        if (isset($i) && !is_string($i))
-        {
+        if (isset($i) && !is_string($i)) {
+            $products = $i->getProduct()->getValues();
+            $productsId = [];
+            foreach ($products as $val) {
+                $productsId[] = $val->getProduct()->getId();
+            }
+
+            if ($productsId == null) {
+                return $this->redirectToRoute('list');
+            }
+
             $order = $orderRepository->find($i);
 
             $status = $request->query->get('status');
@@ -297,14 +288,11 @@ class ListController extends AbstractController
             $em->persist($order);
             $em->flush();
 
-            if ($order->getStatus() == 2)
-            {
+            if ($order->getStatus() == 2) {
                 $session->remove($order->getId());
             }
             return $this->redirectToRoute('list');
-        }
-        else
-        {
+        } else {
             return $this->redirectToRoute('list');
         }
     }
@@ -319,26 +307,19 @@ class ListController extends AbstractController
         $productsDesc = $em->createQuery("SELECT u FROM App\Entity\Product u WHERE u.description LIKE '%$search%'")->getResult();
         $products = array_merge($productsName, $productsDesc);
 
-        foreach($products as $key1 => $val1)
-        {
-            foreach($products as $key2 => $val2)
-            {
-                if($key2 <= $key1)
-                {
+        foreach ($products as $key1 => $val1) {
+            foreach ($products as $key2 => $val2) {
+                if ($key2 <= $key1) {
                     continue;
                 }
-                if($val2 === $val1)
-                {
+                if ($val2 === $val1) {
                     unset($products[$key2]);
                 }
             }
         }
-        if($category = $request->query->get('category'))
-        {
-            foreach($products as $key => $val)
-            {
-                if($val->getCategory()->getId() != $category)
-                {
+        if ($category = $request->query->get('category')) {
+            foreach ($products as $key => $val) {
+                if ($val->getCategory()->getId() != $category) {
                     unset($products[$key]);
                 }
             }
